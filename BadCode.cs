@@ -1,91 +1,112 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace BadCode
 {
-    public class User
+    // Copy-pasted this from the old project, need to clean up later
+    public class UserRecord
     {
-        public string Username;
-        public string Password; // Bad: storing password as plain text
-        public string Email;
-    }
+        public string id;
+        public string name;
+        public string email;
+        public string address;
 
-    public class Calculator
-    {
-        public int result; // Bad: using instance field for local calculation
-
-        public int Add(int a, int b)
-        {
-            result = a + b;
-            return result;
-        }
-
-        public int Subtract(int a, int b)
-        {
-            return a - b;
-        }
-
-        public int Multiply(int a, int b)
-        {
-            return a * b;
-        }
-
-        public int Divide(int a, int b)
-        {
-            return a / b; // Bad: no check for division by zero
+        public void print_user_info() {
+            Console.WriteLine("ID: " + id + " NAME: " + name + " EMAIL: " + email);
         }
     }
 
-    public class FileHelper
+    // Another version of UserRecord because I couldn't find the first one
+    public class ClientData
     {
-        public string ReadFile(string path)
-        {
-            return File.ReadAllText(path); // Bad: no path validation, can read any file
-        }
+        public string id;
+        public string name;
+        public string email;
+        public string address;
 
-        public void WriteFile(string path, string content)
-        {
-            File.WriteAllText(path, content); // Bad: no path validation
+        public void display() {
+            // Same logic as print_user_info
+            Console.WriteLine("ID: " + id + " NAME: " + name + " EMAIL: " + email);
         }
     }
 
-    public class StringHelper
+    public class BusinessLogic
     {
-        public bool CheckPassword(string input)
+        // This is a mess but it works for the requirements
+        public string GetShippingRate(int weight, bool express, int zone, string promo)
         {
-            if (input == "password123") // Bad: hardcoded password
-            {
-                return true;
+            if (weight > 0) {
+                if (express) {
+                    if (zone == 1) {
+                        if (promo == "WINTER20") {
+                            return "Rate: 5.0";
+                        } else {
+                            return "Rate: 10.0";
+                        }
+                    } else {
+                        return "Rate: 20.0";
+                    }
+                } else {
+                    if (weight > 50) {
+                        return "Rate: 15.0";
+                    } else {
+                        return "Rate: 5.0";
+                    }
+                }
             }
-            else
-            {
-                return false; // Bad: redundant if-else
-            }
+            return "Free";
         }
 
-        public string GetFullName(string firstName, string lastName)
+        public void process_everything(int x, int y)
         {
-            return firstName + " " + lastName; // Bad: no null checks
+            // temp variables for testing
+            int a1 = x + y;
+            int a2 = x - y;
+            
+            int unused_val = 55; // i forgot why i added this
+
+            // bad naming
+            int p = a1 / 2;
+            int q = a2 * 10;
+
+            // just making sure it prints
+            Console.WriteLine("Val: " + p);
+            Console.WriteLine("Val: " + p);
+            Console.WriteLine("Val: " + p);
         }
     }
 
-    public class DataProcessor
+    public class FileSystemHelper
     {
-        public void Process()
-        {
-            try
-            {
-                int[] numbers = new int[5];
-                numbers[0] = 1;
-                numbers[1] = 2;
-                numbers[2] = 3;
-                numbers[3] = 4;
-                numbers[4] = 5;
-                Console.WriteLine(numbers[10]); // Bad: index out of bounds
+        // V1 for simple files
+        public void save_content_v1(string p, string c) {
+            if (p == "") return;
+            File.WriteAllText(p, c);
+            Console.WriteLine("Saved at " + DateTime.Now);
+        }
+
+        // V2 i think this is better?
+        public void save_content_v2(string path, string content) {
+            // copy of v1 logic
+            if (path == "") return;
+            File.WriteAllText(path, content);
+            Console.WriteLine("Saved at " + DateTime.Now);
+        }
+    }
+
+    // dont touch this class, it breaks the build for some reason
+    public class helper_class_legacy 
+    {
+        public int MY_VAR = 100;
+        
+        public void DO_STUFF() {
+            try {
+                int zero = 0;
+                int crash = 10 / zero;
+            } catch (Exception e) {
+                // ignore errors for now
             }
-            catch (Exception)
-            {
-            } // Bad: empty catch block
         }
     }
 }
