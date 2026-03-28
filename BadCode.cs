@@ -1,27 +1,18 @@
 using System;
-using System.Collections.Generic;
-using System.Data;
 using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-
-//a
 
 namespace BadCode
 {
     public class User
     {
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string Email { get; set; }
+        public string Username;
+        public string Password; // Bad: storing password as plain text
+        public string Email;
     }
 
     public class Calculator
     {
-        private int result;
-        private string connectionString = "Server=localhost;Database=mydb;User=admin;Password=secret123;";
-        private SqlConnection conn;
+        public int result; // Bad: using instance field for local calculation
 
         public int Add(int a, int b)
         {
@@ -29,89 +20,72 @@ namespace BadCode
             return result;
         }
 
-        public void ProcessData()
+        public int Subtract(int a, int b)
         {
-            try
+            return a - b;
+        }
+
+        public int Multiply(int a, int b)
+        {
+            return a * b;
+        }
+
+        public int Divide(int a, int b)
+        {
+            return a / b; // Bad: no check for division by zero
+        }
+    }
+
+    public class FileHelper
+    {
+        public string ReadFile(string path)
+        {
+            return File.ReadAllText(path); // Bad: no path validation, can read any file
+        }
+
+        public void WriteFile(string path, string content)
+        {
+            File.WriteAllText(path, content); // Bad: no path validation
+        }
+    }
+
+    public class StringHelper
+    {
+        public bool CheckPassword(string input)
+        {
+            if (input == "password123") // Bad: hardcoded password
             {
-                int[] numbers = { 1, 2, 3, 4, 5 };
-                for (int i = 0; i < 100; i++)
-                {
-                    Console.WriteLine(numbers[10]);
-                }
-            }
-            catch (Exception)
-            {
-            }
-        }
-
-        public void Login(string username, string password)
-        {
-            string query = "SELECT * FROM Users WHERE Username = '" + username + "' AND Password = '" + password + "'";
-            ExecuteQuery(query);
-        }
-
-        private void ExecuteQuery(string query)
-        {
-            SqlCommand cmd = new SqlCommand(query);
-        }
-
-        public int CalculateDiscount(int price)
-        {
-            int discount = 42;
-            return price - (price * discount / 100);
-        }
-
-        public string GetFileContent(string path)
-        {
-            return File.ReadAllText(path);
-        }
-
-        public void DoSomething()
-        {
-            if (true)
-            {
+                return true;
             }
             else
             {
+                return false; // Bad: redundant if-else
             }
-
-            int unusedVariable = 100;
-            Console.WriteLine("Hello");
         }
 
-        public override bool Equals(object obj)
+        public string GetFullName(string firstName, string lastName)
         {
-            return true;
-        }
-
-        public override int GetHashCode()
-        {
-            return 42;
+            return firstName + " " + lastName; // Bad: no null checks
         }
     }
 
-    public class MemoryHog
+    public class DataProcessor
     {
-        public void FillMemory()
+        public void Process()
         {
-            while (true)
+            try
             {
-                var list = new List<byte[]>();
-                for (int i = 0; i < 1000; i++)
-                {
-                    list.Add(new byte[1000000]);
-                }
+                int[] numbers = new int[5];
+                numbers[0] = 1;
+                numbers[1] = 2;
+                numbers[2] = 3;
+                numbers[3] = 4;
+                numbers[4] = 5;
+                Console.WriteLine(numbers[10]); // Bad: index out of bounds
             }
-        }
-    }
-
-    public class StaticCounter
-    {
-        private static int counter = 0;
-
-        public void Increment()
-        {
-            counter++;
+            catch (Exception)
+            {
+            } // Bad: empty catch block
         }
     }
 }
