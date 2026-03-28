@@ -6,6 +6,8 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
+//a
+
 namespace BadCode
 {
     public class User
