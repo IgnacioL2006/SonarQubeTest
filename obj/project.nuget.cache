@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "rnLq5+URuZA=",
+  "dgSpecHash": "USk2ZIAs+iM=",
   "success": true,
   "projectFilePath": "C:\\Users\\ignac\\Downloads\\SonarTest\\SonarQubeTest\\SonarQubeTest.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\ignac\\.nuget\\packages\\coverlet.collector\\8.0.1\\coverlet.collector.8.0.1.nupkg.sha512"
+  ],
   "logs": []
 }

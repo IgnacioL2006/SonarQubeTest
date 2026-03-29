@@ -42,6 +42,18 @@ jobs:
       - name: Build and analyze
         shell: powershell
         run: |
-          ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"sonarqube-test" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
+          # 1. Iniciamos el scanner agregando el parámetro para la cobertura (opencover)
+          ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"sonarqube-test" `
+            /d:sonar.token="${{ secrets.SONAR_TOKEN }}" `
+            /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}" `
+            /d:sonar.cs.opencover.reportsPaths="**/*.xml" # <--- ESTO ES VITAL
+          
+          # 2. Compilamos el proyecto del restaurante
           dotnet build
+          
+          # 3. Ejecutamos los tests y generamos el archivo XML de cobertura
+          # Usamos el formato opencover para que Sonar lo entienda a la primera
+          dotnet test --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+          
+          # 4. Finalizamos y enviamos todo al servidor
           ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
