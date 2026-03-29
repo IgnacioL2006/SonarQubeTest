@@ -22,7 +22,7 @@ namespace Restaurant
                 var p = new Product(itemName, 15.0f, 1);
                 order.AddProduct(p);
                 order.CreateOrder(customer, order.Items);
-                activeOrders.Add(order);
+                activeOrders.Add(customer);
                 return true;
             }
             return false;

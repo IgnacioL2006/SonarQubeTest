@@ -15,7 +15,7 @@ public class IntegrationTests
         var order = new Order();     
         var pizza = new Product("Pizza", 12.5f, 1); // Only one left
         
-        inventory.RequestProduct("pizza"); 
+        inventory.RequestProduct("Pizza"); 
         order.AddProduct(pizza);
 
         // Assert
