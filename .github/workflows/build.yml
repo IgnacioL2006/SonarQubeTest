@@ -42,17 +42,21 @@ jobs:
       - name: Build and analyze
         shell: powershell
         run: |
-            # 1. Iniciamos el scanner con una ruta más específica
-            ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"sonarqube-test" `
-              /d:sonar.token="${{ secrets.SONAR_TOKEN }}" `
-              /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}" `
-              /d:sonar.cs.opencover.reportsPaths="**/*.xml"
-            
-            # 2. Compilamos
-            dotnet build
-            
-            # 3. Forzamos la creación del reporte en una carpeta fija (TestResults)
-            dotnet test --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
-            
-            # 4. Finalizamos
-            ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+          # 1. Iniciamos el scanner definiendo fuentes y tests manualmente
+          ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"sonarqube-test" `
+            /d:sonar.token="${{ secrets.SONAR_TOKEN }}" `
+            /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}" `
+            /d:sonar.sources="." `
+            /d:sonar.tests="." `
+            /d:sonar.test.inclusions="**/*Tests.cs" `
+            /d:sonar.exclusions="**/*Tests.cs" `
+            /d:sonar.cs.opencover.reportsPaths="**/*.xml" 
+          
+          # 2. Compilamos (quitamos el dotnet build anterior si es necesario)
+          dotnet build
+          
+          # 3. Ejecutamos los tests SIN el --no-build para asegurar la instrumentación
+          dotnet test --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+          
+          # 4. Finalizamos
+          ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
