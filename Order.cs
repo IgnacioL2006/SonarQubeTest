@@ -5,10 +5,10 @@ namespace Restaurant
 {
     public class Order
     {
-        public int Id { get; set; } 
+        public int Id { get; set; }
         public string Customer { get; set; } = string.Empty;
-        public List<Product> Items { get; set; } = new List<Product>();
-        public string Status { get; set; } = "pending";
+        public List<Product> Items { get; set; } 
+        public string Status { get; set; }
 
         public Order()
         {
