@@ -5,20 +5,23 @@ using Restaurant;
 //    INTEGRATION TEST
 // #######################
 
-public class IntegrationTests
+namespace Restaurant.Tests
 {
-    [Fact]
-    public void Order_ShouldCheckInventory_BeforeAdding()
+    public class IntegrationTests
     {
-        // Create scenario
-        var inventory = new Inventory(); 
-        var order = new Order();     
-        var pizza = new Product("Pizza", 12.5f, 1); // Only one left
-        
-        inventory.RequestProduct("Pizza"); 
-        order.AddProduct(pizza);
+        [Fact]
+        public void Order_ShouldCheckInventory_BeforeAdding()
+        {
+            // Create scenario
+            var inventory = new Inventory();
+            var order = new Order();
+            var pizza = new Product("Pizza", 12.5f, 1); // Only one left
 
-        // Assert
-        Assert.Single(order.Items); // The pizza enter to the order
+            inventory.RequestProduct("Pizza");
+            order.AddProduct(pizza);
+
+            // Assert
+            Assert.Single(order.Items); // The pizza enter to the order
+        }
     }
 }

@@ -4,22 +4,25 @@ using Xunit;
 // #######################
 //    FULL SYSTEM TEST
 // #######################
-public class SystemTests
+namespace Restaurant.Tests
 {
-    [Fact]
-    public void FullRestaurantFlow_ShouldCompleteSuccessfully()
+    public class SystemTests
     {
-        // Init all the system
-        var myRestaurant = new RestaurantSystem();
-        string customerName = "Valerio";
-        string productToOrder = "Pizza";
+        [Fact]
+        public void FullRestaurantFlow_ShouldCompleteSuccessfully()
+        {
+            // Init all the system
+            var myRestaurant = new RestaurantSystem();
+            string customerName = "Valerio";
+            string productToOrder = "Pizza";
 
-        // Simulate all the restaurant order process
-        bool success = myRestaurant.ProcessCustomerOrder(customerName, productToOrder);
+            // Simulate all the restaurant order process
+            bool success = myRestaurant.ProcessCustomerOrder(customerName, productToOrder);
 
-        // Verify a correct final state
-        Assert.True(success);
-        Assert.Single(myRestaurant.activeOrders); 
-        Assert.Equal("created", myRestaurant.activeOrders[0].Status); 
+            // Verify a correct final state
+            Assert.True(success);
+            Assert.Single(myRestaurant.activeOrders);
+            Assert.Equal("created", myRestaurant.activeOrders[0].Status);
+        }
     }
 }

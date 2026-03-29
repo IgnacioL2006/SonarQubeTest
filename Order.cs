@@ -6,7 +6,7 @@ namespace Restaurant
     public class Order
     {
         public int Id;
-        public string Customer;
+        public string Customer = string.Empty;
         public List<Product> Items;
         public string Status;
 
