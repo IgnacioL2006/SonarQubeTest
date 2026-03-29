@@ -1,5 +1,5 @@
 using Xunit;
-using Restaurant
+using Restaurant;
 
 // #######################
 //    INTEGRATION TEST
