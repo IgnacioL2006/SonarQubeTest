@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SonarQubeTest")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+afb46d81c51edaffa8b8960753c7dbd14b660a8f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4e95f777abafe1a83116c7fad7475cba8084171d")]
 [assembly: System.Reflection.AssemblyProductAttribute("SonarQubeTest")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SonarQubeTest")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
