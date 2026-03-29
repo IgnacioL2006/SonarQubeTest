@@ -2,7 +2,7 @@ namespace Restaurant
 {
     public class Inventory
     {
-        private List<Product> products;
+        private readonly List<Product> products;
         public Inventory()
         {
             products = new List<Product>();

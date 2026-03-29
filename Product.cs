@@ -4,9 +4,9 @@ namespace Restaurant
 {
     public class Product
     {
-        public string Name;
-        public float Price;
-        public int Stock;
+        public string Name { get; set; } = string.Empty;
+        public float Price { get; set; }
+        public int Stock { get; set; }
         public Product(string name, float price, int stock)
         {
             Name = name;
